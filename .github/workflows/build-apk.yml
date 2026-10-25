@@ -21,9 +21,11 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # gradlew 대신 우분투 환경의 기본 gradle 명령어를 사용하도록 변경
+      - name: Grant Execute Permission for Gradle Wrapper
+        run: chmod +x gradlew || true
+
       - name: Build APK with Gradle
-        run: gradle assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
