@@ -21,11 +21,15 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Grant Execute Permission for Gradle Wrapper
-        run: chmod +x gradlew || true
+      # Gradle 8.5 자동 설치 및 설정
+      - name: Setup Gradle 8.5
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.5'
 
+      # gradlew 대신 시스템 gradle 명령어 사용
       - name: Build APK with Gradle
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
